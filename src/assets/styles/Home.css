@@ -1,0 +1,32 @@
+.list {
+    width: 250px;
+}
+
+.root {
+    flex-grow: 1;
+    height: 100vh;
+}
+.menuButton {
+    margin-right: 16px !important;
+}
+.title {
+    flex-grow: 1;
+}
+.link {
+    text-decoration: none !important;
+}
+.color-white {
+    color: white;
+}
+.logo {
+    height: 50px;
+    width: 50px;
+}
+.nav-bar {
+    height: 72px;
+}
+@media screen and (max-width: 1000px){
+    .nav-bar{
+        color: green;
+    }
+}
