@@ -1,20 +1,20 @@
 import GoogleMap from 'google-map-react'
-import {React, Component} from 'react'
+import React,  {Component} from 'react'
 import googleApiKey from '../constants/googleApiKey'
-import './Map.css'
+import '../assets/styles/Map.css'
 
 
 
-class Map extends Component {
+class GMap extends Component {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
       super(props);
      }
     
     render() {
-        var the_center = [34.0522, -118.2437]
+        var the_center = [25.7574, -80.3733]
         return (  
-        <div style= {{height: 'calc(100vh - 71.83px)', width: '100%'}}>
+        <div style= {{height: '100%', width: '100%'}}>
             <GoogleMap
             apiKey = {googleApiKey}
             defaultZoom = {10}
@@ -30,4 +30,4 @@ class Map extends Component {
 
 };
 
-export default Map;
+export default GMap;

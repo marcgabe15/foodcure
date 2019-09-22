@@ -20,7 +20,6 @@ class LoginContainer extends Component {
   };
   goToSignup = async event => {
     console.log('switched to login page')
-    event.preventDefault()
     this.props.history.push("/signup")
   }
 

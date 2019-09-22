@@ -42,8 +42,14 @@ class App extends React.Component {
                 authenticated={authenticated}
                 user = {currentUser}
         />
+        <PrivateRoute
+          exact path="/map"
+          component={Home}
+          authenticated={authenticated}
+          user = {currentUser}
+        />
         <Route exact path="/login" component={Login}/>
-        <Route exact path="signup" component={Signup}/>
+        <Route exact path="/signup" component={Signup}/>
       </Router>
     )
   }

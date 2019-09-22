@@ -6,7 +6,7 @@
     text-align: center;
     margin: auto 0;
 }
-.dreamteam-logo {
+.shellhacks-logo {
     max-height: 30%;
     max-width: 30%;
 }
@@ -32,6 +32,7 @@
     margin: 0 20px;
 }
 .input {
+    width: 90%;
     padding: 8.85px 13px;
     margin: 5px 0;
     font-size: 14px;
@@ -40,6 +41,10 @@
 .input:hover {
     border: 1px solid black;
 }
+.button-signup:hover, .button-signin:hover {
+    cursor: pointer;
+}
+
 .button-signin, .button-signup {
     padding: 8.85px 13px;
     font-size: 14px;
@@ -47,5 +52,9 @@
     width: 100%;
     color: #ffffff;
     border-radius: 3px;
-    background: linear-gradient(215deg, #546e7a, #37474f)
+    background: linear-gradient(215deg, #546e7a, #37474f);
+}
+.button-signup .link {
+    text-decoration: none;
+    color: #fff;
 }

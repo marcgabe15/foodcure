@@ -18,6 +18,10 @@
 .color-white {
     color: white;
 }
+.put-right {
+    right: 3%;
+    position: absolute !important;
+}
 .logo {
     height: 50px;
     width: 50px;
@@ -29,4 +33,93 @@
     .nav-bar{
         color: green;
     }
+}
+.shellhacks-logo {
+    max-height: 30%;
+    max-width: 30%;
+}
+.realness {
+    max-height: 45%;
+    max-width: 45%;
+    margin: 0 auto;
+}
+.actual-modal {
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,.15), 0 2px 4px 0 rgba(0,0,0,.12);
+    border: 1px solid #dbe5ec;
+    overflow: hidden;
+    background-clip: padding-box;
+    border-radius: 6px;
+    transition: all .25s ease-in;
+    width: 400px;
+    height: 450px;
+    margin-top: 15px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: initial;
+}
+
+.added {
+    margin: 0 auto;
+}
+
+.right-container {
+    height: calc(100vh - 72px);
+    width: 50%;
+}
+.map-paper {
+    width: 40%;
+    height: 200px;
+    position: absolute;
+    bottom: 5%;
+    left: 55%;
+}
+.parent-container {
+    display: flex;
+}
+.Time {
+    font-size: 20px;
+}
+
+.otherdata {
+    font-size: 35px;
+}
+
+.other-container {
+    height: calc(100%-72px);
+    width: 50%;
+
+    justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap
+}
+
+.the-container {
+    height: calc(100%-72px);
+    position: absolute;
+    right: 0;
+    width: 50%;
+    justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap
+}
+.paper-piece {
+    text-align: center;
+}
+
+.paper-piece div {
+    color: white;
+    margin-top: 10px;
+}
+
+.paper-piece {
+    margin: 15px;
+    background: #0F2027;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    min-width: 200px;
+    height: 100px;
 }

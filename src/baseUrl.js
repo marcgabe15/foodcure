@@ -1,0 +1,1 @@
+const baseUrl = 'https://shellhacks2019-1f061.appspot.com'

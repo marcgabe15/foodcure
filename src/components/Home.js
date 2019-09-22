@@ -3,21 +3,24 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-// import Map from './Map'
 import '../assets/styles/Home.css';
 import app from '../constants/apiconfig'
-import { BrowserRouter as Router, Link, Route, Switch, Redirect } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import checklogo from '../assets/check-mark.png'
+import xlogo from '../assets/x-mark.png'
+import Gmap from './GMap'
+import axios from 'axios'
+import Paper from '@material-ui/core/Paper'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HomeIcon from '@material-ui/icons/Home';
-import DashBoardIcon from '@material-ui/icons/Dashboard';
-import AccesibilityIcon from '@material-ui/icons/Accessibility'
-import ContactIcon from '@material-ui/icons/ContactSupport'
+import MenuIcon from '@material-ui/icons/Menu'
 import ListItemText from '@material-ui/core/ListItemText';
 import BugIcon from '@material-ui/icons/BugReport'
+import carelogo from '../assets/care++.svg'
 
 
  class Home extends Component {
@@ -26,12 +29,28 @@ import BugIcon from '@material-ui/icons/BugReport'
      super(props);
      this.state = {
       user: this.props.user,
-      fullname: "John",
-      email: "john@john.com",
-      database_username: '',
-      left: false
+      userdata: [],
+      recentdata: [
+        {
+          humidity: 0,
+          temp: 0,
+          fallen: false,
+          heatindex: 0,
+          date: 'Sun, 22 Sep 2019 05:21:45 GMT'
+        }
+      ],
+      left: false,
+      isFetching: false,
     }
      
+  }
+  componentDidMount() {
+    this.fetchData();
+    this.timer = setInterval(() => this.fetchData(), 5000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
   signOut () {
     app.auth().signOut().then(function() {
@@ -40,63 +59,33 @@ import BugIcon from '@material-ui/icons/BugReport'
       alert('cant sign out')
     });
   }
-  // addTest () {
-  //   console.log("Started Database Test")
-  //   const db = app.firestore().collection('users').doc(this.state.user.uid);
-  //   const {fullname , email} = this.state;
-  //   db.set({
-  //       fullname,
-  //       email
-  //   }).then(console.log("Completed Database Add"))
-  //   .catch((error) => alert(error))
-  // }
   toggleDrawer (open)  {
     this.setState({
       left : open
     })
   };
-  // getTest () {
-  //   console.log("Started Database get test")
-  //   console.log(this.state.user.uid)
-  //   const db = app.firestore().collection(`users/${this.state.user.uid}/Progress`);
-  //   let all = db.get().then(snapshot => {
-  //     snapshot.forEach(doc => {
-  //       console.log(doc.data())
-  //     })
-  //   })
-  // }
+  async fetchData() {
+    try {
+    this.setState({...this.state, isFetching: true})
+    const response = await axios.get('https://shellhacks2019-1f061.appspot.com/markers');
+    const secresponse = await axios.get('https://shellhacks2019-1f061.appspot.com/recent');
+    console.log(secresponse.data[0])
+    this.setState({...this.state, recentdata: secresponse.data, userdata: response.data, isFetching: false})
+    }catch(e) {
+      console.log(e);
+      this.setState({...this.state, isFetching: false})
+    }
+  }
   render () {
-    //this.addTest();
-    // this.getTest();
+    let TheImage = (this.state.recentdata[0].fallen === "false" || this.state.recentdata[0].fallen === false)? <img className="realness" src={checklogo}></img> : <img className="realness" src={xlogo}></img>
     return (
-      
       <div className="root">
         <AppBar position="static" className="nav-bar">
           <Toolbar>
             <IconButton  onClick={() => this.toggleDrawer(true)} edge="start" className="menuButton" color="inherit" aria-label="Menu">
-              <p className="title">
-                Care++
-              </p>
+              <MenuIcon/>
             </IconButton>
-            {/* <h2 className="title">
-              Gator Pal
-            </h2> */}
-            {/* <Button color="inherit">
-              <Link to="/" className="link color-white"> 
-                Main
-              </Link>
-            </Button>
-            <Button color="inherit">
-              <Link to="/therapy" className="link color-white"> 
-                Therapy
-              </Link>
-            </Button>
-            <Button color="inherit">
-              <Link to="/analytics" className="link color-white"> 
-                Analytics
-              </Link>
-            </Button> */}
-            <Button color="inherit" onClick={this.signOut}>
+            <Button color="inherit" onClick={this.signOut} className='put-right'>
               Sign Out
             </Button>
           </Toolbar>
@@ -113,18 +102,6 @@ import BugIcon from '@material-ui/icons/BugReport'
                     <ListItemText primary={'Home'} />
                 </ListItem>
               </Link>
-              <Link to="/map" className="link">
-                <ListItem button key={'Therapy'}>
-                  <ListItemIcon><AccesibilityIcon/></ListItemIcon>
-                  <ListItemText primary={'Therapy'} />
-              </ListItem>
-              </Link>
-              <Link to="/contact" className="link">
-                <ListItem button key={'Contact'}>
-                    <ListItemIcon><ContactIcon /></ListItemIcon>
-                    <ListItemText primary={'Contact'} />
-                </ListItem>
-              </Link>
             </List>
             <Divider />
             <List>
@@ -135,8 +112,61 @@ import BugIcon from '@material-ui/icons/BugReport'
             </List>
           </div>
         </Drawer>
-        <Route exact path="/" component={Home}></Route>
-        <Route path="/map" component={Map}></Route>
+        <div className="parent-container">
+          <div className="other-container">
+            <Paper className="actual-modal">
+              <img className="shellhacks-logo added" src={carelogo}></img>
+              <h2>Status of Patient</h2>
+              {
+                TheImage
+              }
+            </Paper>
+          </div>
+          <div className="right-container">
+            <div className="the-container">
+            <Paper className="paper-piece">
+              <div>Temperature</div>
+              <div className="otherdata">
+                {
+                  this.state.recentdata[0].temp
+                }<span>&#176;</span>C
+              </div>
+            </Paper>
+            <Paper className="paper-piece">
+              <div>Humidity</div>
+              <div className="otherdata">
+              {
+                this.state.recentdata[0].humidity
+              }%
+              </div>
+            </Paper>
+            <Paper className="paper-piece">
+              <div>Heat Index</div>
+              <div className="otherdata">
+              {
+                this.state.recentdata[0].heatindex
+              }<span>&#176;</span>C
+              </div>
+            </Paper>
+            <Paper className="paper-piece">
+              <div>Last Update</div>
+              <div className="Time">
+              {
+                this.state.recentdata[0].date.substring(0, 17)
+              }
+              </div>
+              <div className="Time">
+              {
+                this.state.recentdata[0].date.substring(17)
+              }
+              </div>
+            </Paper>
+          </div>
+            <Paper className="map-paper">
+              <Gmap/>
+            </Paper>
+          </div>
+        </div>
       </div> 
     )
   }
